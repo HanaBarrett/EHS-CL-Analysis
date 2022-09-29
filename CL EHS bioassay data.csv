@@ -1,0 +1,85 @@
+﻿Day ,Insect,Treatment,Replicate,Alive,Dead,Total
+0,EHS Crawlers,CL,1,2,0,2
+0,EHS Crawlers,CL,2,3,0,3
+0,EHS Crawlers,CL,3,6,0,6
+0,EHS Crawlers,No fungus,1,6,0,6
+0,EHS Crawlers,No fungus,2,2,0,2
+0,EHS Crawlers,No fungus,3,7,0,7
+1,EHS Crawlers,CL,1,2,0,2
+1,EHS Crawlers,CL,2,17,1,18
+1,EHS Crawlers,CL,3,30,0,30
+1,EHS Crawlers,No fungus,1,9,0,9
+1,EHS Crawlers,No fungus,2,9,0,9
+1,EHS Crawlers,No fungus,3,4,0,4
+2,EHS Crawlers,CL,1,14,0,14
+2,EHS Crawlers,CL,2,33,0,33
+2,EHS Crawlers,CL,3,27,0,27
+2,EHS Crawlers,No fungus,1,14,0,14
+2,EHS Crawlers,No fungus,2,11,0,11
+2,EHS Crawlers,No fungus,3,20,1,21
+3,EHS Crawlers,CL,1,16,1,17
+3,EHS Crawlers,CL,2,37,0,37
+3,EHS Crawlers,CL,3,35,1,36
+3,EHS Crawlers,No fungus,1,24,1,25
+3,EHS Crawlers,No fungus,2,22,0,22
+3,EHS Crawlers,No fungus,3,22,0,22
+4,EHS Crawlers,CL,1,15,4,19
+4,EHS Crawlers,CL,2,56,1,57
+4,EHS Crawlers,CL,3,24,0,24
+4,EHS Crawlers,No fungus,1,21,1,22
+4,EHS Crawlers,No fungus,2,16,0,16
+4,EHS Crawlers,No fungus,3,19,1,20
+5,EHS Crawlers,CL,1,19,9,28
+5,EHS Crawlers,CL,2,77,2,79
+5,EHS Crawlers,CL,3,28,2,30
+5,EHS Crawlers,No fungus,1,32,0,32
+5,EHS Crawlers,No fungus,2,32,2,34
+5,EHS Crawlers,No fungus,3,25,2,27
+6,EHS Crawlers,CL,1,20,7,27
+6,EHS Crawlers,CL,2,58,3,61
+6,EHS Crawlers,CL,3,31,2,33
+6,EHS Crawlers,No fungus,1,38,3,41
+6,EHS Crawlers,No fungus,2,27,0,27
+6,EHS Crawlers,No fungus,3,39,3,42
+7,EHS Crawlers,CL,1,26,6,32
+7,EHS Crawlers,CL,2,81,1,82
+7,EHS Crawlers,CL,3,32,3,35
+7,EHS Crawlers,No fungus,1,38,4,42
+7,EHS Crawlers,No fungus,2,32,8,40
+7,EHS Crawlers,No fungus,3,42,2,44
+8,EHS Crawlers,CL,1,28,4,32
+8,EHS Crawlers,CL,2,80,4,84
+8,EHS Crawlers,CL,3,47,5,52
+8,EHS Crawlers,No fungus,1,49,5,54
+8,EHS Crawlers,No fungus,2,38,3,41
+8,EHS Crawlers,No fungus,3,33,1,34
+9,EHS Crawlers,CL,1,NA,NA,NA
+9,EHS Crawlers,CL,2,NA,NA,NA
+9,EHS Crawlers,CL,3,NA,NA,NA
+9,EHS Crawlers,No fungus,1,NA,NA,NA
+9,EHS Crawlers,No fungus,2,NA,NA,NA
+9,EHS Crawlers,No fungus,3,NA,NA,NA
+10,EHS Crawlers,CL,1,34,18,52
+10,EHS Crawlers,CL,2,113,16,129
+10,EHS Crawlers,CL,3,28,16,44
+10,EHS Crawlers,No fungus,1,49,4,53
+10,EHS Crawlers,No fungus,2,35,1,36
+10,EHS Crawlers,No fungus,3,37,2,39
+11,EHS Crawlers,CL,1,34,31,65
+11,EHS Crawlers,CL,2,83,28,111
+11,EHS Crawlers,CL,3,16,7,23
+11,EHS Crawlers,No fungus,1,37,4,41
+11,EHS Crawlers,No fungus,2,33,6,39
+11,EHS Crawlers,No fungus,3,24,4,28
+12,EHS Crawlers,CL,1,40,34,74
+12,EHS Crawlers,CL,2,111,81,192
+12,EHS Crawlers,CL,3,41,14,55
+12,EHS Crawlers,No fungus,1,51,5,56
+12,EHS Crawlers,No fungus,2,37,5,42
+12,EHS Crawlers,No fungus,3,45,8,53
+13,EHS Crawlers,CL,1,26,37,63
+13,EHS Crawlers,CL,2,150,75,225
+13,EHS Crawlers,CL,3,26,13,39
+13,EHS Crawlers,No fungus,1,58,14,72
+13,EHS Crawlers,No fungus,2,34,16,50
+13,EHS Crawlers,No fungus,3,45,6,51

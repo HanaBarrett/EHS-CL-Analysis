@@ -1,0 +1,38 @@
+﻿Site,Sample,Morphotype ,Higher ID,Lower ID,Number,,Higher ID,Lower ID,Number
+UM,1,1,Collembola,Entomobrya nivalis,3,,Collembola,Entomobrya nivalis,6
+VF,3,1,Collembola,Entomobrya nivalis,1,,Araneae,Mecaphesa,1
+VF,3,2,Araneae,Mecaphesa,1,,Hymenoptera,NA,1
+VF,3,3,Hymenoptera,NA,1,,Araneae,Araneidae,2
+BAF,2,4,Araneae,Araneidae,1,,Coleoptera,Cybocephalus nipponicus,33
+VF,3,4,Araneae,Araneidae,1,,Coleoptera,NA,1
+BAF,2,5,Coleoptera,Cybocephalus nipponicus,2,,Acari,NA,1
+VF,1,5,Coleoptera,Cybocephalus nipponicus,11,,Araneae,Salticidae,1
+VF,2,5,Coleoptera,Cybocephalus nipponicus,1,,Collembola,Entomobryomorpha,2
+VF,3,5,Coleoptera,Cybocephalus nipponicus,15,,Psocodea,NA,8
+VF,4,5,Coleoptera,Cybocephalus nipponicus,3,,Collembola,Entomobrya nivalis,2
+VF,2,6,Coleoptera,NA,1,,Hymenoptera,Encarsia citrina,2
+VF,1,7,Acari,NA,1,,Araneae,NA,5
+VF,1,8,Araneae,Salticidae,1,,Araneae,Thomisidae,1
+VF,1,9,Collembola,Entomobryomorpha,1,,Thysanoptera,NA,1
+BAF,1,10,Psocodea,NA,1,,Araneae,Hentzia sp.,1
+BAF,2,10,Psocodea,NA,1,,Collembola,Symphypleona,1
+UM,1,10,Psocodea,NA,1,,Araneae,Micryphantidae,4
+BAF,2,11,Collembola,Entomobrya nivalis,1,,,,
+BAF,2,12,Coleoptera,Cybocephalus nipponicus,1,,,,
+BAF,1,13,Psocodea,NA,1,,,,
+UM,1,13,Psocodea,NA,1,,,,
+BAF,1,14,Collembola,Entomobrya nivalis,1,,,,
+BAF,1,15,Hymenoptera,Encarsia citrina,1,,,,
+UM,1,15,Hymenoptera,Encarsia citrina,1,,,,
+MRO,2,16,Araneae,NA,1,,,,
+MRO,2,17,Araneae,Thomisidae,1,,,,
+MRO,1,18,Thysanoptera,NA,1,,,,
+UM,1,19,Araneae,NA,1,,,,
+UM,2,19,Araneae,NA,1,,,,
+UM,1,20,Araneae,Hentzia sp.,1,,,,
+UM,1,21,Psocodea,NA,3,,,,
+UM,1,22,Collembola,Entomobryomorpha,1,,,,
+UM,1,23,Collembola,Symphypleona,1,,,,
+MR,1,24,Araneae,Micryphantidae,1,,,,
+MRO,3,24,Araneae,Micryphantidae,3,,,,
+MRO,2,25,Araneae,NA,1,,,,

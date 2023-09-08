@@ -39,7 +39,9 @@ limits.per=aes(ymin=mn.per-se.per, ymax=mn.per+se.per)
 
 plt1=ggplot(CL.dat3, aes(x=Day, y=mn.per, color=Treatment))+
   scale_color_manual(values=palette1)+theme+geom_errorbar(limits.per)+
-  geom_line(size=3)+ylab("Mean survival")+scale_y_continuous(label=percent, limits=c(0,1))+scale_x_continuous(breaks=0:13, minor_breaks=F)+theme(legend.position=c(0.7,0.3))+theme(legend.text = element_text(size=30), axis.text.x = element_text(size=35), axis.text.y=element_text(size=35), axis.title.x=element_text(size=40), axis.title.y=element_text(size=40))
+  geom_line(size=3)+ylab("Mean survival")+scale_y_continuous(label=percent, limits=c(0,1))+scale_x_continuous(breaks=0:13, minor_breaks=F)+
+  theme(legend.position=c(0.7,0.3))+theme(legend.text = element_text(size=30), axis.text.x = element_text(size=35), axis.text.y=element_text(size=35), axis.title.x=element_text(size=40), axis.title.y=element_text(size=40),
+                                          panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 plt1
 
@@ -54,7 +56,8 @@ palette2 <- c("#d6c91a", "#3d3a08")
 
 plt2=ggplot(CL.dat4, aes(x=Day, y=Mean, fill=Status))+
   scale_fill_manual(values=palette2)+ theme+
-  geom_area(position="dodge")+facet_wrap(~Treatment)+scale_x_continuous(breaks=0:13, minor_breaks=F)+theme(legend.position="bottom")
+  geom_area(position="dodge")+facet_wrap(~Treatment)+scale_x_continuous(breaks=0:13, minor_breaks=F)+theme(legend.position="bottom",
+                                                                                                           panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 plt2
 
@@ -171,10 +174,10 @@ cbPalette=c("#5470F4", "#8D54F4", "#F4C954")
 theme = theme_bw()+theme(text = element_text(size=15), axis.title.x = element_text(size=25), axis.title.y = element_text(size=25), axis.text.x = element_text(size=20), axis.text.y = element_text(size=20), title = element_text(size=30), legend.title = element_text(size=20), legend.text = element_text(size=15), strip.text = element_text(size = 20, color = "black", face = "bold"),strip.background = element_rect(color="black", fill="white", size=1.5, linetype="solid"))
 limits=aes(ymin=mn-sd, ymax=mn+sd)
 
-plt2=ggplot(spo2_lact, aes(x=Strain, y=mn, fill=Dye))+geom_col(position=position_dodge2(0.9, preserve="single",))+geom_errorbar(limits, size=1, width=.9, position=position_dodge2(0.9, preserve="single"))+facet_grid(cols=vars(Measurement), rows=vars(Dye), scales="free_x", space="free_x")+theme_bw()+scale_fill_manual(values="#F4C954")+guides(fill="none")+ylab("Mean (µm)")+theme+theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1), axis.title.x=element_blank())
+plt2=ggplot(spo2_lact, aes(x=Strain, y=mn, fill=Dye))+geom_col(position=position_dodge2(0.9, preserve="single",))+geom_errorbar(limits, size=1, width=.9, position=position_dodge2(0.9, preserve="single"))+facet_grid(cols=vars(Measurement), rows=vars(Dye), scales="free_x", space="free_x")+theme_bw()+scale_fill_manual(values="#F4C954")+guides(fill="none")+ylab("Mean (?m)")+theme+theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1), axis.title.x=element_blank())
 plt2
 
-plt3=ggplot(spo2_dyes, aes(x=Measurement, y=mn, pattern=Measurement, fill=Dye))+geom_col(position=position_dodge2(0.9, preserve="single"))+geom_errorbar(limits, size=1, width=.9, position=position_dodge2(0.9, preserve="single"))+facet_grid(cols=vars(Dye, Strain), scales="free_x", space="free_x")+theme_bw()+ylab("Mean (µm)")+guides(fill="none")+theme+theme(legend.position = c(0.58, 0.8))+theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1), axis.title.x=element_blank())
+plt3=ggplot(spo2_dyes, aes(x=Measurement, y=mn, pattern=Measurement, fill=Dye))+geom_col(position=position_dodge2(0.9, preserve="single"))+geom_errorbar(limits, size=1, width=.9, position=position_dodge2(0.9, preserve="single"))+facet_grid(cols=vars(Dye, Strain), scales="free_x", space="free_x")+theme_bw()+ylab("Mean (?m)")+guides(fill="none")+theme+theme(legend.position = c(0.58, 0.8))+theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1), axis.title.x=element_blank())
 plt3
 
 #Temperature growth analysis

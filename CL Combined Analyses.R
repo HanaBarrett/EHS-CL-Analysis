@@ -4,6 +4,7 @@ library(RColorBrewer)
 library(scales)
 library(agricolae)
 library(survival)
+library(viridis)
 
 #Bioassay analysis
 CL.dat <- read.csv("CL EHS bioassay data.csv", fileEncoding = 'UTF-8-BOM')
@@ -208,3 +209,28 @@ growth_rate= growth_stat %>%
 
 growth_rate
 
+#Published and observed spore metrics
+
+con_dat <- read.csv("Conoideocrella spore measurements.csv")
+
+con_dat2 = con_dat %>%
+  rename_with(str_to_title) %>%
+  mutate(Metric=str_to_title(Metric)) %>%
+  pivot_longer(cols=Mean:Max, names_to="Metric2", values_to="Value") %>%
+  pivot_wider(names_from=c("Metric", "Metric2"), values_from="Value") %>%
+  mutate(Species=as.factor(Species)) %>%
+  mutate(Species=factor(Species, levels=levels(Species)[c(3,4,2,1,5,7,8,6)]))
+
+theme = theme_bw()+theme(text = element_text(size=15), axis.title.x = element_text(size=20), axis.title.y = element_text(size=20), axis.text.x = element_text(size=20), axis.text.y = element_text(size=20), title = element_text(size=35), legend.title = element_text(size=15))
+
+plt3=ggplot(con_dat2)+
+  geom_rect(aes(ymin=Length_Mean-Length_Difference, ymax=Length_Mean+Length_Difference, xmin=Width_Mean-Width_Difference, xmax=Width_Mean+Width_Difference, fill=Species), alpha=0.5)+
+  geom_point(aes(x=Width_Mean, y=Length_Mean, color=Species), size=4)+
+  geom_point(aes(x=Width_Mean, y=Length_Mean), color="white", size=2)+
+  theme_bw()+scale_color_viridis_d(option="C")+
+  scale_fill_viridis_d(option="C")+theme+ylim(0,16)+xlim(0,5)+
+  theme(text=element_text(size=15))+ylab("Length")+xlab("Width")+
+  ggrepel::geom_label_repel(aes(x=Width_Mean, y=Length_Mean, label=Species), color="black")+
+  guides(color="none")+theme(axis.ticks.length=unit(-0.25, "cm"), legend.position="bottom")
+
+plt3

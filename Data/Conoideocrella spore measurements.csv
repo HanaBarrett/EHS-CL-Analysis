@@ -1,17 +1,19 @@
 Species,Metric,Mean,Difference,Min,Max
-Conoideocrella luteorostrata,length,6.35,2.3,,
-Conoideocrella luteorostrata,width,2.1,0.8,,
-UM11,length,5.72,1.89,4.81,6.7
-UM11,width,1.6,0.66,1.3,1.96
-VF11,length,5.57,2.03,4.48,6.51
-VF11,width,1.58,1.01,1.08,2.09
-BAF11,length,5.97,1.89,5.39,7.28
-BAF11,width,1.62,0.73,1.35,2.08
-UM14_ARSEF14590,length,7.37,1.46,6.55,8.01
-UM14_ARSEF14590,width,2.54,0.57,2.3,2.87
-VF41,length,6.5,1.7,5.48,7.18
-VF41,width,2.37,0.78,2.05,2.83
-Dussiella tuberiformis,length,8.5,3,,
-Dussiella tuberiformis,width,3.75,0.5,,
+Samson 1974,length,6.35,1.15,,
+Samson 1974,width,2.1,0.4,,
+Saito et al. 2012,length,6.4,1.2,,
+Saito et al. 2012,width,2.45,0.15,,
+Hywel-Jones 1993,length,7.4,0.9,,
+Hywel-Jones 1993,width,2.8,0.8,,
+UM11,length,6.58,1.16,5.71,8.03
+UM11,width,2.66,0.455,2.21,3.12
+VF11,length,7.16,0.86,6.27,7.99
+VF11,width,2.76,0.375,2.36,3.11
+UM14,length,7.37,0.73,6.55,8.01
+UM14,width,2.54,0.285,2.3,2.87
+VF41,length,6.5,0.875,5.43,7.18
+VF41,width,2.37,0.39,2.05,2.83
+Dussiella tuberiformis,length,8.5,1.5,,
+Dussiella tuberiformis,width,3.75,0.25,,
 Conoideocrella krungchingensis,length,11.5,3.5,,
 Conoideocrella krungchingensis,width,3,1,,

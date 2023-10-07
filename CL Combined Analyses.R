@@ -1,9 +1,10 @@
 #Install packages
 library(tidyverse)
+library(agricolae)
+library(car)
+library(survival)
 library(RColorBrewer)
 library(scales)
-library(agricolae)
-library(survival)
 library(viridis)
 
 #Bioassay analysis
@@ -19,7 +20,6 @@ CL.dat2 <-  CL.dat %>%
   group_by(Replicate, Treatment) %>%
   mutate(Dead = Individuals - lag(Individuals, default = first(Individuals), order_by = Day)) %>%
   mutate(Dead=ifelse(Dead>0, Dead, 0)) %>%
-#  mutate(Individuals2=cumsum(Dead))
   mutate(Percent=1-Individuals/Total)
 
 CL.dat3 = CL.dat2 %>%
@@ -50,15 +50,17 @@ CL.dat4 = CL.dat3 %>%
   select(Treatment, Day, mn.ind, mn.total) %>%
   group_by(Treatment, Day) %>%
   pivot_longer(cols=c(mn.ind, mn.total), names_to="Status", values_to="Mean") %>%
-  mutate(Status=replace(Status, Status=="mn.ind", "Mean Dead"),
-         Status=replace(Status, Status=="mn.total", "Mean Crawlers"))
+  mutate(Status=replace(Status, Status=="mn.ind", "Dead"),
+         Status=replace(Status, Status=="mn.total", "Alive"))
 
 palette2 <- c("#d6c91a", "#3d3a08")
 
 plt2=ggplot(CL.dat4, aes(x=Day, y=Mean, fill=Status))+
   scale_fill_manual(values=palette2)+ theme+
-  geom_area(position="dodge")+facet_wrap(~Treatment)+scale_x_continuous(breaks=0:13, minor_breaks=F)+theme(legend.position="bottom",
-                                                                                                           panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  geom_area(position="dodge")+facet_wrap(~Treatment)+ylab("Mean number of crawlers")+
+  scale_x_continuous(breaks=0:13, minor_breaks=F)+
+  theme(legend.position=c(0.1, 0.9), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.ticks=element_line(size=2))
 
 plt2
 
@@ -111,39 +113,46 @@ n.dat2 <- n.dat %>%
 
 pal=colorRampPalette(brewer.pal(8, "Dark2"))(31)
 
-plt=ggplot(n.dat2, aes(x=paste(EHS.Status, Fungus.status, Bleach, sep="\n"), y=n, alpha=as.numeric(Needle.status), fill=as.factor(Group.Number)))+
+plt3=ggplot(n.dat2, aes(x=paste(EHS.Status, Fungus.status, Bleach, sep="\n"), y=n, alpha=as.numeric(Needle.status), fill=as.factor(Group.Number)))+
   geom_col(position=position_dodge2(preserve = "single"))+facet_wrap(~Site)+scale_fill_manual(values=pal)+
   scale_y_continuous(breaks=seq(0, 5, 1))+theme+theme(legend.position=c(0.83,0.2))+
   theme(axis.title.x=element_blank())+ylab("Count")+labs(fill="Morphogroup")+guides(fill=guide_legend(ncol=4), alpha="none")
 
-plt
+plt3
 
 #Spore measurement analysis
-spo <- read.csv("CL spore measurements.csv", fileEncoding = 'UTF-8-BOM')
+spo <- read.csv("CL isolate measurements.csv", fileEncoding = 'UTF-8-BOM')
 
 spo2 = spo %>%
   group_by(Strain, Dye, Measurement) %>%
   summarize(mn=mean(Value), sd=sd(Value), min=min(Value), max=max(Value), n=length(Value))
 
-spo_lact = spo %>%
-  filter(Dye=="Lactic acid") %>%
+spo_comb = spo %>%
   group_by(Dye, Measurement) %>%
   summarize(mn=mean(Value), sd=sd(Value), min=min(Value), max=max(Value), n=length(Value)) %>%
   mutate(Strain="Combined")
 
-sp.mod=aov(Value~Strain+Dye+Measurement, data=spo)
+sp.mod=aov(Value~Strain+Measurement, data=spo)
 summary(sp.mod)
 
-sp.tuk=HSD.test(sp.mod, trt=c("Strain", "Dye", "Measurement"))
+shapiro.test(rstandard(sp.mod))
+
+spo.width=spo %>% filter(Measurement=="width")
+with(spo.width, leveneTest(Value, factor(Strain)))
+
+spo.length=spo %>% filter(Measurement=="length")
+with(spo.length, leveneTest(Value, factor(Strain)))?
+
+sp.tuk=HSD.test(sp.mod, trt=c("Strain", "Measurement"))
 
 sp.tuk.r=sp.tuk$means %>%
   rownames_to_column() %>%
-  separate(rowname, into=c("Strain", "Dye", "Measurement"), sep=":") %>%
-  select(Strain, Dye, Measurement, r)
+  separate(rowname, into=c("Strain", "Measurement"), sep=":") %>%
+  select(Strain, Measurement, r)
 
 sp.grouping=sp.tuk$groups %>%
   rownames_to_column() %>%
-  separate(rowname, into=c("Strain", "Dye", "Measurement"), sep=":") %>%
+  separate(rowname, into=c("Strain", "Measurement"), sep=":") %>%
   left_join(sp.tuk.r) %>%
   rename("n"=r)
 
@@ -151,18 +160,15 @@ sp.grouping
 
 #write.csv(sp.grouping, "spore groupings.csv", row.names=F)
 
-spo2_lact = spo2 %>%
-  filter(Dye=="Lactic acid") %>%
-  bind_rows(spo_lact) %>%
+spo2_comb = spo2 %>%
+  bind_rows(spo_comb) %>%
   mutate(Strain=as.factor(Strain)) %>%
-  mutate(Strain=factor(Strain, levels=levels(Strain)[c(2, 1, 3, 4)])) %>%
   mutate(Measurement=str_replace(Measurement, "length", "Length"),
          Measurement=str_replace(Measurement, "width", "Width"),)
 
 spo2_dyes = spo2 %>%
   filter(Strain=="VF 11") %>%
   mutate(Strain=as.factor(Strain)) %>%
-  mutate(Strain=factor(Strain, levels=levels(Strain)[c(2, 1, 3, 4)])) %>%
   mutate(Measurement=str_replace(Measurement, "length", "Length"),
          Measurement=str_replace(Measurement, "width", "Width"),)
 
@@ -170,16 +176,6 @@ spo3 = spo2 %>%
   pivot_longer(cols=c(mn, sd, max, min, n), values_to="Value", names_to="Stat") %>%
   pivot_wider(id_cols=c(Strain, Dye), names_from=c(Measurement, Stat), values_from=Value)
 
-cbPalette=c("#5470F4", "#8D54F4", "#F4C954")
-
-theme = theme_bw()+theme(text = element_text(size=15), axis.title.x = element_text(size=25), axis.title.y = element_text(size=25), axis.text.x = element_text(size=20), axis.text.y = element_text(size=20), title = element_text(size=30), legend.title = element_text(size=20), legend.text = element_text(size=15), strip.text = element_text(size = 20, color = "black", face = "bold"),strip.background = element_rect(color="black", fill="white", size=1.5, linetype="solid"))
-limits=aes(ymin=mn-sd, ymax=mn+sd)
-
-plt2=ggplot(spo2_lact, aes(x=Strain, y=mn, fill=Dye))+geom_col(position=position_dodge2(0.9, preserve="single",))+geom_errorbar(limits, size=1, width=.9, position=position_dodge2(0.9, preserve="single"))+facet_grid(cols=vars(Measurement), rows=vars(Dye), scales="free_x", space="free_x")+theme_bw()+scale_fill_manual(values="#F4C954")+guides(fill="none")+ylab("Mean (?m)")+theme+theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1), axis.title.x=element_blank())
-plt2
-
-plt3=ggplot(spo2_dyes, aes(x=Measurement, y=mn, pattern=Measurement, fill=Dye))+geom_col(position=position_dodge2(0.9, preserve="single"))+geom_errorbar(limits, size=1, width=.9, position=position_dodge2(0.9, preserve="single"))+facet_grid(cols=vars(Dye, Strain), scales="free_x", space="free_x")+theme_bw()+ylab("Mean (?m)")+guides(fill="none")+theme+theme(legend.position = c(0.58, 0.8))+theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1), axis.title.x=element_blank())
-plt3
 
 #Temperature growth analysis
 growth_dat <- read.csv("CL Temperature Assay.csv")
@@ -218,19 +214,33 @@ con_dat2 = con_dat %>%
   mutate(Metric=str_to_title(Metric)) %>%
   pivot_longer(cols=Mean:Max, names_to="Metric2", values_to="Value") %>%
   pivot_wider(names_from=c("Metric", "Metric2"), values_from="Value") %>%
-  mutate(Species=as.factor(Species)) %>%
-  mutate(Species=factor(Species, levels=levels(Species)[c(3,4,2,1,5,7,8,6)]))
+  mutate(Species=as.factor(Species))
+
+CL_limits=con_dat2 %>%
+  mutate(CL=ifelse(grepl("is", Species), "No", "Yes")) %>%
+  group_by(CL) %>%
+  summarize(Length_Max=max(Length_Mean+Length_Difference, na.rm=T), Length_Min=min(Length_Mean-Length_Difference, na.rm=T), Width_Max=max(Width_Mean+Width_Difference, na.rm=T), Width_Min=min(Width_Mean-Width_Difference, na.rm=T)) %>%
+  filter(CL=="Yes") %>%
+  select(-CL)
 
 theme = theme_bw()+theme(text = element_text(size=15), axis.title.x = element_text(size=20), axis.title.y = element_text(size=20), axis.text.x = element_text(size=20), axis.text.y = element_text(size=20), title = element_text(size=35), legend.title = element_text(size=15))
 
-plt3=ggplot(con_dat2)+
+plt4=ggplot(con_dat2)+
   geom_rect(aes(ymin=Length_Mean-Length_Difference, ymax=Length_Mean+Length_Difference, xmin=Width_Mean-Width_Difference, xmax=Width_Mean+Width_Difference, fill=Species), alpha=0.5)+
   geom_point(aes(x=Width_Mean, y=Length_Mean, color=Species), size=4)+
   geom_point(aes(x=Width_Mean, y=Length_Mean), color="white", size=2)+
   theme_bw()+scale_color_viridis_d(option="C")+
-  scale_fill_viridis_d(option="C")+theme+ylim(0,16)+xlim(0,5)+
+  scale_fill_viridis_d(option="C")+theme+ylim(4,16)+xlim(1,5)+
   theme(text=element_text(size=15))+ylab("Length")+xlab("Width")+
-  ggrepel::geom_label_repel(aes(x=Width_Mean, y=Length_Mean, label=Species), color="black")+
-  guides(color="none")+theme(axis.ticks.length=unit(-0.25, "cm"), legend.position="bottom")
+  ggrepel::geom_label_repel(aes(x=Width_Mean, y=Length_Mean, label=Species), color="black", box.padding=1)+
+  guides(color="none")+
+  theme(axis.ticks.length=unit(-0.25, "cm"),
+        legend.position="bottom", panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())+
+  geom_rect(dat=CL_limits, aes(ymin=Length_Min, ymax=Length_Max,
+                               xmin=Width_Min, xmax=Width_Max),
+            color="black",fill=NA, linewidth=1, linetype=2)+
+  ggrepel::geom_label_repel(dat=CL_limits, aes(y=Length_Min-0.3, x=Width_Max-0.1),
+            label="Conoideocrella luteorostrata")
 
-plt3
+plt4
